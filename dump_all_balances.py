@@ -25,7 +25,7 @@ def main(url, output):
     substrate = SubstrateInterface(url=url)
     account_len = 0
     result = substrate.query_map('System', 'Account', page_size=200,
-                                 max_results=400)
+                                 max_results=100000)
     out = csv.writer(output, delimiter=',')
     headers = False
     for account, account_info in result:

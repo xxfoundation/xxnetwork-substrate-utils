@@ -2,6 +2,7 @@ import json
 import logging as log
 import argparse
 from json import JSONDecodeError
+import csv
 from substrateinterface import SubstrateInterface  # pip3 install substrate-interface
 ########################################################################################################################
 # Auxiliar Functions
@@ -161,5 +162,22 @@ def main():
             file.write(json.dumps(result, indent=4))
     else:
         print(json.dumps(result, indent=4))
+
+    out = csv.writer(open('out.csv', 'w'), delimiter=',')
+    headers = False
+    for k, v in result.items():
+        r = [k]
+        if type(v) is dict:
+            if not headers:
+                headers = True
+                r = ["account_id"]
+                r.extend([x for x in v.keys()])
+                out.writerow(r)
+            r = [k]
+            r.extend([x for x in v.values()])
+        else:
+            r = [k, v]
+        out.writerow(r)
+
 if __name__ == "__main__":
     main()
