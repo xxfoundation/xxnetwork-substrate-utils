@@ -28,12 +28,12 @@ def main(url, output):
                                  max_results=400)
     out = csv.writer(output, delimiter=',')
     headers = False
-    out.writerow(["account id", "free balance"])
     for account, account_info in result:
         if not headers:
             r = ["account id"]
             r.extend(account_info.value['data'].keys())
             out.writerow(r)
+            headers = True
 
         r = [f"{account.value}"]
         r.extend(account_info.value['data'].values())
